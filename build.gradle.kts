@@ -19,3 +19,7 @@ submission {
     // Optionally require public grader for mainBuildSubmission task. Default is false
     requireGraderPublic = false
 }
+
+dependencies {
+    testImplementation(libs.mockito.inline)
+}
