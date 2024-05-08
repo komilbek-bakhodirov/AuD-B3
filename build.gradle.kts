@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.algomate)
+    alias(libs.plugins.jagr)
 }
 
 exercise {
@@ -18,8 +19,4 @@ submission {
     requireTests = false
     // Optionally require public grader for mainBuildSubmission task. Default is false
     requireGraderPublic = false
-}
-
-dependencies {
-    testImplementation(libs.mockito.inline)
 }
