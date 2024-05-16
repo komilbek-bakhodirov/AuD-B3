@@ -20,19 +20,23 @@ public class CountingComparator<T> implements Comparator<T> {
      */
     private final Comparator<T> delegate;
 
+    // counts the number of comparisons
+    private int comparisonsCount;
+
     /**
      * Creates a new {@link CountingComparator} that delegates the actual comparison to the given {@link Comparator}.
      * @param delegate the {@link Comparator} that performs the actual comparison.
      */
     public CountingComparator(Comparator<T> delegate) {
         this.delegate = delegate;
+        this.comparisonsCount = 0;
     }
 
     /**
      * Resets the number of comparisons made by the {@link #compare(Object, Object)} method to 0.
      */
     public void reset() {
-        crash(); //TODO: H1 b) - remove if implemented
+        comparisonsCount = 0;
     }
 
     /**
@@ -46,7 +50,8 @@ public class CountingComparator<T> implements Comparator<T> {
      */
     @Override
     public int compare(T o1, T o2) {
-        return crash(); //TODO: H1 b) - remove if implemented
+        comparisonsCount++;
+        return delegate.compare(o1, o2);
     }
 
     /**
@@ -58,6 +63,6 @@ public class CountingComparator<T> implements Comparator<T> {
      * @return the number of comparisons made.
      */
     public int getComparisonsCount() {
-        return crash(); //TODO: H1 b) - remove if implemented
+        return comparisonsCount;
     }
 }

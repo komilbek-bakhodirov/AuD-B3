@@ -37,6 +37,9 @@ public class CardComparator implements Comparator<Card> {
      */
     @Override
     public int compare(Card o1, Card o2) {
-        return crash(); //TODO: H1 a) - remove if implemented
+        int comparisonValue = Integer.compare(o1.cardValue(), o2.cardValue());
+        if (comparisonValue == 0)
+            return o1.cardColor().compareTo(o2.cardColor());
+        return comparisonValue;
     }
 }

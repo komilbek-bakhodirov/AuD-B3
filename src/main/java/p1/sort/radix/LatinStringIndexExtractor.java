@@ -13,7 +13,13 @@ public class LatinStringIndexExtractor implements RadixIndexExtractor<String> {
 
     @Override
     public int extractIndex(String value, int position) {
-        return crash(); //TODO: H3  a) - remove if implemented
+        char c = value.charAt(value.length() - 1 - position);
+        if (c >= 'a' && c <= 'z') {
+            return c - 'a';
+        } else if (c >= 'A' && c <= 'Z') {
+            return c - 'A';
+        }
+        return 0;
     }
 
     @Override

@@ -78,7 +78,14 @@ public class HybridSort<T> implements Sort<T> {
      * @param right The rightmost index of the list to be sorted. (inclusive)
      */
     public void mergeSort(SortList<T> sortList, int left, int right) {
-        crash(); //TODO: H2 b) - remove if implemented
+        if (right - left + 1 < k) {
+            bubbleSort(sortList, left, right);
+        } else if (left < right){
+            int middle = (left + right) / 2;
+            mergeSort(sortList, left, middle);
+            mergeSort(sortList, middle + 1, right);
+            merge(sortList, left, middle, right);
+        }
     }
 
     /**
@@ -100,7 +107,42 @@ public class HybridSort<T> implements Sort<T> {
      * @param right The rightmost index of the two sublists to be merged. (inclusive)
      */
     public void merge(SortList<T> sortList, int left, int middle, int right) {
-        crash(); //TODO: H2 b) - remove if implemented
+        int numberOfL = middle - left + 1;
+        int numberOfR = right - middle;
+
+        SortList<T> Left = new ArraySortList<>(numberOfL);
+        SortList<T> Right = new ArraySortList<>(numberOfR);
+
+        for (int i = 0; i < numberOfL; i++) {
+            Left.set(i, sortList.get(left + i));
+        }
+
+        for (int i = 0; i < numberOfR; i++) {
+            Right.set(i, sortList.get(middle + 1 + i));
+        }
+
+        int i = 0, j = 0, k = left; // k is the merged(result) array
+        while (i < numberOfL && j < numberOfR){
+            if (comparator.compare(Left.get(i), Right.get(j)) <= 0){
+                sortList.set(k, Left.get(i));
+                i++;
+            } else {
+                sortList.set(k, Right.get(j));
+                j++;
+            }
+            k++;
+        }
+        while (i < numberOfL){
+            sortList.set(k, Left.get(i));
+            i++;
+            k++;
+        }
+
+        while (j < numberOfR){
+            sortList.set(k, Right.get(j));
+            j++;
+            k++;
+        }
     }
 
     /**
@@ -113,8 +155,15 @@ public class HybridSort<T> implements Sort<T> {
      * @param right The rightmost index of the list to be sorted.
      */
     public void bubbleSort(SortList<T> sortList, int left, int right) {
-
-        crash(); //TODO: H2 a) - remove if implemented
+        for (int i = right; i > left ; i--) {
+            for (int j = left; j < i; j++) {
+                if (comparator.compare(sortList.get(j), sortList.get(j + 1)) > 0) {
+                    T temp = sortList.get(j + 1);
+                    sortList.set(j + 1, sortList.get(j));
+                    sortList.set(j, temp);
+                }
+            }
+        }
     }
 
 }
